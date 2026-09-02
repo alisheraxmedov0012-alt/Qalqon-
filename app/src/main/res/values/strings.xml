@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Qalqon</string>
+    <string name="welcome_title">Qalqonga xush kelibsiz</string>
+    <string name="welcome_subtitle">Bu ilova ota-onalarga bolalardan telefon foydalanishini nazorat qilishda yordam beradi.</string>
+    <string name="btn_continue">Davom etish</string>
+    <string name="home_title">Bosh sahifa</string>
+    <string name="home_status_off">Himoya hozircha o‘chirilgan</string>
+</resources>
