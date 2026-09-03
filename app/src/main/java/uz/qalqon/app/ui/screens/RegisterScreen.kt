@@ -1,11 +1,6 @@
 package uz.qalqon.app.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -20,7 +15,7 @@ import uz.qalqon.app.R
 @Composable
 fun RegisterScreen(
     onBackClick: () -> Unit,
-    onContinueClick: () -> Unit
+    onContinueClick: (String, String) -> Unit
 ) {
     var fullName by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
@@ -49,7 +44,7 @@ fun RegisterScreen(
             value = fullName,
             onValueChange = { fullName = it },
             label = { Text(stringResource(R.string.label_full_name)) },
-            modifier = Modifier.fillMaxSize().weight(0.0f, false)
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -58,21 +53,22 @@ fun RegisterScreen(
             value = phone,
             onValueChange = { phone = it },
             label = { Text(stringResource(R.string.label_phone)) },
-            modifier = Modifier.fillMaxSize().weight(0.0f, false)
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
-            onClick = onContinueClick,
-            enabled = fullName.isNotBlank() && phone.isNotBlank()
+            onClick = { onContinueClick(fullName, phone) },
+            enabled = fullName.isNotBlank() && phone.isNotBlank(),
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = stringResource(R.string.btn_continue))
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        TextButton(onClick = onBackClick) {
+        TextButton(onClick = onBackClick, modifier = Modifier.fillMaxWidth()) {
             Text(text = stringResource(R.string.btn_back))
         }
     }
