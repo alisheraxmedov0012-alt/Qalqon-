@@ -6,17 +6,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import uz.qalqon.app.data.repository.AuthRepository
+import uz.qalqon.app.data.repository.ProfileRepository
 import uz.qalqon.app.data.session.SessionManager
-import uz.qalqon.app.ui.screens.CreatePinScreen
-import uz.qalqon.app.ui.screens.HomeScreen
-import uz.qalqon.app.ui.screens.LoginScreen
-import uz.qalqon.app.ui.screens.RegisterScreen
-import uz.qalqon.app.ui.screens.WelcomeScreen
+import uz.qalqon.app.ui.screens.*
 
 @Composable
 fun AppNavHost(
     authRepository: AuthRepository,
-    sessionManager: SessionManager
+    sessionManager: SessionManager,
+    profileRepository: ProfileRepository
 ) {
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
@@ -89,7 +87,31 @@ fun AppNavHost(
 
         composable(AppScreen.Home.route) {
             HomeScreen(
-                sessionManager = sessionManager
+                sessionManager = sessionManager,
+                authRepository = authRepository,
+                profileRepository = profileRepository,
+                onParentProfileClick = {
+                    navController.navigate(AppScreen.ParentProfile.route)
+                },
+                onChildProfilesClick = {
+                    navController.navigate(AppScreen.ChildProfiles.route)
+                }
+            )
+        }
+
+        composable(AppScreen.ParentProfile.route) {
+            ParentProfileScreen(
+                sessionManager = sessionManager,
+                profileRepository = profileRepository,
+                onBackClick = { navController.popBackStack() }
+            )
+        }
+
+        composable(AppScreen.ChildProfiles.route) {
+            ChildProfilesScreen(
+                sessionManager = sessionManager,
+                profileRepository = profileRepository,
+                onBackClick = { navController.popBackStack() }
             )
         }
     }
