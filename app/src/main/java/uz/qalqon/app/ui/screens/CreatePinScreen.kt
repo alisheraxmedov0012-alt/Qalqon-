@@ -1,11 +1,6 @@
 package uz.qalqon.app.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -20,7 +15,7 @@ import uz.qalqon.app.R
 @Composable
 fun CreatePinScreen(
     onBackClick: () -> Unit,
-    onPinCreated: () -> Unit
+    onPinCreated: (String) -> Unit
 ) {
     var pin by remember { mutableStateOf("") }
     var confirmPin by remember { mutableStateOf("") }
@@ -50,7 +45,8 @@ fun CreatePinScreen(
         OutlinedTextField(
             value = pin,
             onValueChange = { pin = it },
-            label = { Text(stringResource(R.string.label_pin)) }
+            label = { Text(stringResource(R.string.label_pin)) },
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -58,21 +54,23 @@ fun CreatePinScreen(
         OutlinedTextField(
             value = confirmPin,
             onValueChange = { confirmPin = it },
-            label = { Text(stringResource(R.string.label_pin_confirm)) }
+            label = { Text(stringResource(R.string.label_pin_confirm)) },
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
-            onClick = onPinCreated,
-            enabled = isValid
+            onClick = { onPinCreated(pin) },
+            enabled = isValid,
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = stringResource(R.string.btn_create))
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        TextButton(onClick = onBackClick) {
+        TextButton(onClick = onBackClick, modifier = Modifier.fillMaxWidth()) {
             Text(text = stringResource(R.string.btn_back))
         }
     }
