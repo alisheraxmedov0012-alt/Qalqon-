@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Qalqon</string>
-
     <string name="welcome_title">Qalqonga xush kelibsiz</string>
-    <string name="welcome_subtitle">Bu ilova ota-onalarga bolalardan telefon foydalanishini nazorat qilishda yordam beradi.</string>
-    <string name="welcome_register">Ro'yxatdan o'tish</string>
+    <string name="welcome_subtitle">Bu ilova o&#8216;ta-onalarga bolalardan telefon foydalanishini nazorat qilishda yordam beradi</string>
+    <string name="welcome_register">Ro&#8216;yxatdan o&#8216;tish</string>
     <string name="welcome_login">Kirish</string>
 
-    <string name="register_title">Ro'yxatdan o'tish</string>
-    <string name="register_subtitle">Hisob yaratish uchun to'liq ism va telefon raqamini kiriting</string>
+    <string name="register_title">Ro&#8216;yxatdan o&#8216;tish</string>
+    <string name="register_subtitle">Hisob yarartish uchun to&#8216;liq ism va telefon raqamini kiriting</string>
 
     <string name="login_title">Kirish</string>
     <string name="login_subtitle">Davom etish uchun telefon raqami va PIN-kodni kiriting</string>
@@ -16,7 +15,7 @@
     <string name="createpin_title">PIN-kod yarating</string>
     <string name="createpin_subtitle">Hisobingizni himoyalash uchun 4 yoki 6 xonali PIN belgilang</string>
 
-    <string name="label_full_name">To'liq ism</string>
+    <string name="label_full_name">To&#8216;liq ism</string>
     <string name="label_phone">Telefon raqami</string>
     <string name="label_pin">PIN-kod</string>
     <string name="label_pin_confirm">PIN-kodni takrorlang</string>
@@ -27,5 +26,5 @@
     <string name="btn_back">Orqaga</string>
 
     <string name="home_title">Bosh sahifa</string>
-    <string name="home_status_off">Himoya hozircha o'chirilgan</string>
+    <string name="home_status_off">Himoya hozircha o&#8216;chirilgan</string>
 </resources>
