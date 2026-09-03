@@ -3,7 +3,7 @@
     <string name="app_name">Qalqon</string>
 
     <string name="welcome_title">Qalqonga xush kelibsiz</string>
-    <string name="welcome_subtitle">Bu ilova o\'ta-onalarga bolalardan telefon foydalanishini nazorat qilishda yordam beradi</string>
+    <string name="welcome_subtitle">Bu ilova ota-onalarga bolalardan telefon foydalanishini nazorat qilishda yordam beradi</string>
     <string name="welcome_register">Ro\'yxatdan o\'tish</string>
     <string name="welcome_login">Kirish</string>
 
@@ -26,7 +26,24 @@
     <string name="btn_login">Kirish</string>
     <string name="btn_back">Orqaga</string>
     <string name="btn_logout">Chiqish</string>
+    <string name="btn_save">Saqlash</string>
+    <string name="btn_delete">O\'chirish</string>
 
     <string name="home_title">Bosh sahifa</string>
     <string name="home_status_off">Himoya hozircha o\'chirilgan</string>
+    <string name="home_menu_parent">Ota-ona profili</string>
+    <string name="home_menu_children">Bolalar profillari</string>
+    <string name="home_user_name">Ism</string>
+    <string name="home_user_phone">Telefon</string>
+    <string name="home_parent_status">Ota-ona profili</string>
+    <string name="home_children_count">Bolalar soni</string>
+
+    <string name="parent_title">Ota-ona profili</string>
+    <string name="parent_display_name_hint">Ko\'rsatiladigan ism</string>
+
+    <string name="children_title">Bolalar profillari</string>
+    <string name="children_name_hint">Bola ismi</string>
+    <string name="children_add">Bola qo\'shish</string>
+    <string name="children_empty">Hozircha bola qo\'shilmagan</string>
+    <string name="children_level_label">Cheklov darajasi</string>
 </resources>
