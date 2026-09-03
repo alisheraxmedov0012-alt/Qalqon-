@@ -8,6 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.room.Room
 import uz.qalqon.app.data.local.AppDatabase
 import uz.qalqon.app.data.repository.AuthRepository
+import uz.qalqon.app.data.repository.ProfileRepository
 import uz.qalqon.app.data.session.SessionManager
 import uz.qalqon.app.navigation.AppNavHost
 
@@ -18,11 +19,20 @@ class MainActivity : ComponentActivity() {
             applicationContext,
             AppDatabase::class.java,
             "qalqon_db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     private val authRepository by lazy {
         AuthRepository(database.userAccountDao())
+    }
+
+    private val profileRepository by lazy {
+        ProfileRepository(
+            parentDao = database.parentProfileDao(),
+            childDao = database.childProfileDao()
+        )
     }
 
     private val sessionManager by lazy {
@@ -35,7 +45,8 @@ class MainActivity : ComponentActivity() {
             Surface(color = MaterialTheme.colorScheme.background) {
                 AppNavHost(
                     authRepository = authRepository,
-                    sessionManager = sessionManager
+                    sessionManager = sessionManager,
+                    profileRepository = profileRepository
                 )
             }
         }
