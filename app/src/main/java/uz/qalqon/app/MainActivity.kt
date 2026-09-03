@@ -5,14 +5,38 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.room.Room
+import uz.qalqon.app.data.local.AppDatabase
+import uz.qalqon.app.data.repository.AuthRepository
+import uz.qalqon.app.data.session.SessionManager
 import uz.qalqon.app.navigation.AppNavHost
 
 class MainActivity : ComponentActivity() {
+
+    private val database by lazy {
+        Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "qalqon_db"
+        ).build()
+    }
+
+    private val authRepository by lazy {
+        AuthRepository(database.userAccountDao())
+    }
+
+    private val sessionManager by lazy {
+        SessionManager(applicationContext)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             Surface(color = MaterialTheme.colorScheme.background) {
-                AppNavHost()
+                AppNavHost(
+                    authRepository = authRepository,
+                    sessionManager = sessionManager
+                )
             }
         }
     }
