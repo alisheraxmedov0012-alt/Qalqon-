@@ -15,17 +15,24 @@ import uz.qalqon.app.R
 import uz.qalqon.app.data.repository.AuthRepository
 import uz.qalqon.app.data.repository.ProfileRepository
 import uz.qalqon.app.data.session.SessionManager
+import uz.qalqon.app.data.settings.SettingsRepository
 
 @Composable
 fun HomeScreen(
     sessionManager: SessionManager,
     authRepository: AuthRepository,
     profileRepository: ProfileRepository,
+    settingsRepository: SettingsRepository,
     onParentProfileClick: () -> Unit,
-    onChildProfilesClick: () -> Unit
+    onChildProfilesClick: () -> Unit,
+    onSettingsClick: () -> Unit,
+    onProtectedAppsClick: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val loggedInUserId by sessionManager.loggedInUserId.collectAsState(initial = null)
+    val settings by settingsRepository.settingsFlow.collectAsState(
+        initial = uz.qalqon.app.data.settings.AppSettings()
+    )
 
     var fullName by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
@@ -52,9 +59,11 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(20.dp))
+
         Text(
             text = stringResource(R.string.home_title),
             style = MaterialTheme.typography.headlineMedium
@@ -63,7 +72,11 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = stringResource(R.string.home_status_off),
+            text = if (settings.protectionEnabled) {
+                stringResource(R.string.home_status_on)
+            } else {
+                stringResource(R.string.home_status_off)
+            },
             style = MaterialTheme.typography.bodyLarge
         )
 
@@ -79,6 +92,7 @@ fun HomeScreen(
 
         Text(text = "${stringResource(R.string.home_parent_status)}: $parentStatus")
         Text(text = "${stringResource(R.string.home_children_count)}: $childCount")
+        Text(text = "${stringResource(R.string.home_scan_mode)}: ${scanModeLabel(settings.scanMode)}")
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -100,6 +114,24 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        Button(
+            onClick = onSettingsClick,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = stringResource(R.string.home_menu_settings))
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(
+            onClick = onProtectedAppsClick,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = stringResource(R.string.home_menu_protected_apps))
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         OutlinedButton(
             onClick = {
                 scope.launch {
@@ -110,5 +142,13 @@ fun HomeScreen(
         ) {
             Text(text = stringResource(R.string.btn_logout))
         }
+    }
+}
+
+private fun scanModeLabel(mode: String): String {
+    return when (mode) {
+        "battery_saver" -> "Batareyani tejash"
+        "strict" -> "Qattiq"
+        else -> "Muvozanatli"
     }
 }
