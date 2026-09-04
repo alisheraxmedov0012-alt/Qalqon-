@@ -31,12 +31,16 @@
 
     <string name="home_title">Bosh sahifa</string>
     <string name="home_status_off">Himoya hozircha o\'chirilgan</string>
+    <string name="home_status_on">Himoya yoqilgan</string>
     <string name="home_menu_parent">Ota-ona profili</string>
     <string name="home_menu_children">Bolalar profillari</string>
+    <string name="home_menu_settings">Sozlamalar</string>
+    <string name="home_menu_protected_apps">Himoyalangan ilovalar</string>
     <string name="home_user_name">Ism</string>
     <string name="home_user_phone">Telefon</string>
     <string name="home_parent_status">Ota-ona profili</string>
     <string name="home_children_count">Bolalar soni</string>
+    <string name="home_scan_mode">Skanerlash rejimi</string>
 
     <string name="parent_title">Ota-ona profili</string>
     <string name="parent_display_name_hint">Ko\'rsatiladigan ism</string>
@@ -46,4 +50,23 @@
     <string name="children_add">Bola qo\'shish</string>
     <string name="children_empty">Hozircha bola qo\'shilmagan</string>
     <string name="children_level_label">Cheklov darajasi</string>
+
+    <string name="settings_title">Sozlamalar</string>
+    <string name="settings_protection">Himoya yoqilsin</string>
+    <string name="settings_scan_mode">Skanerlash rejimi</string>
+    <string name="settings_unknown_policy">Noma\'lum foydalanuvchi siyosati</string>
+    <string name="settings_no_face_policy">Yuz aniqlanmasa</string>
+    <string name="settings_recovery_delay">Qayta tiklanish vaqti</string>
+    <string name="settings_low_battery">Kam batareyada tejash</string>
+
+    <string name="scan_battery">Tejash</string>
+    <string name="scan_balanced">Muvozanatli</string>
+    <string name="scan_strict">Qattiq</string>
+
+    <string name="policy_allow">Ruxsat</string>
+    <string name="policy_soft">Yumshoq blok</string>
+    <string name="policy_hard">Qattiq blok</string>
+
+    <string name="protected_apps_title">Himoyalangan ilovalar</string>
+    <string name="protected_apps_empty">Hozircha ilovalar yo\'q</string>
 </resources>
