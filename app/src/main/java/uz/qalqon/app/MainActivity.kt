@@ -10,6 +10,7 @@ import uz.qalqon.app.data.local.AppDatabase
 import uz.qalqon.app.data.repository.AuthRepository
 import uz.qalqon.app.data.repository.ProfileRepository
 import uz.qalqon.app.data.session.SessionManager
+import uz.qalqon.app.data.settings.SettingsRepository
 import uz.qalqon.app.navigation.AppNavHost
 
 class MainActivity : ComponentActivity() {
@@ -39,6 +40,10 @@ class MainActivity : ComponentActivity() {
         SessionManager(applicationContext)
     }
 
+    private val settingsRepository by lazy {
+        SettingsRepository(applicationContext)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -46,7 +51,9 @@ class MainActivity : ComponentActivity() {
                 AppNavHost(
                     authRepository = authRepository,
                     sessionManager = sessionManager,
-                    profileRepository = profileRepository
+                    profileRepository = profileRepository,
+                    settingsRepository = settingsRepository,
+                    protectedAppDao = database.protectedAppDao()
                 )
             }
         }
