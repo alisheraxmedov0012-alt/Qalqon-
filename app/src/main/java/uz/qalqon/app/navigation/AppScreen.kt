@@ -8,5 +8,7 @@ sealed class AppScreen(val route: String) {
     data object Home : AppScreen("home")
     data object ParentProfile : AppScreen("parent_profile")
     data object ChildProfiles : AppScreen("child_profiles")
+    data object Settings : AppScreen("settings")
+    data object ProtectedApps : AppScreen("protected_apps")
 }
 
