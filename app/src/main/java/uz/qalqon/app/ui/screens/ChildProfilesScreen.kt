@@ -18,7 +18,8 @@ import uz.qalqon.app.data.session.SessionManager
 fun ChildProfilesScreen(
     sessionManager: SessionManager,
     profileRepository: ProfileRepository,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onEnrollFaceClick: (Int) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val loggedInUserId by sessionManager.loggedInUserId.collectAsState(initial = null)
@@ -92,6 +93,9 @@ fun ChildProfilesScreen(
                                 profileRepository.deleteChildProfile(child)
                                 refresh()
                             }
+                        },
+                        onEnrollFace = {
+                            onEnrollFaceClick(child.id)
                         }
                     )
                 }
@@ -112,7 +116,8 @@ fun ChildProfilesScreen(
 @Composable
 private fun ChildItem(
     child: ChildProfile,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onEnrollFace: () -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth()
@@ -126,11 +131,32 @@ private fun ChildItem(
                 text = "${stringResource(R.string.children_level_label)}: ${child.restrictionLevel}",
                 style = MaterialTheme.typography.bodyMedium
             )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = if (child.isFaceEnrolled) {
+                    stringResource(R.string.face_enrolled)
+                } else {
+                    stringResource(R.string.face_not_enrolled)
+                },
+                style = MaterialTheme.typography.bodyMedium
+            )
             Spacer(modifier = Modifier.height(8.dp))
-            OutlinedButton(onClick = onDelete) {
+
+            OutlinedButton(
+                onClick = onEnrollFace,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = stringResource(R.string.btn_enroll_face))
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedButton(
+                onClick = onDelete,
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Text(text = stringResource(R.string.btn_delete))
             }
         }
     }
 }
-    
