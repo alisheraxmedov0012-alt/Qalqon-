@@ -33,6 +33,18 @@ class ProfileRepository(
         }
     }
 
+    suspend fun markParentFaceEnrolled(accountId: Int, enrolled: Boolean) {
+        val existing = parentDao.getByAccountId(accountId)
+        if (existing != null) {
+            parentDao.update(
+                existing.copy(
+                    isFaceEnrolled = enrolled,
+                    updatedAt = System.currentTimeMillis()
+                )
+            )
+        }
+    }
+
     suspend fun getChildProfiles(accountId: Int): List<ChildProfile> {
         return childDao.getAllByAccountId(accountId)
     }
@@ -50,5 +62,18 @@ class ProfileRepository(
     suspend fun deleteChildProfile(profile: ChildProfile) {
         childDao.delete(profile)
     }
-}
 
+    suspend fun getChildById(accountId: Int, childId: Int): ChildProfile? {
+        return childDao.getAllByAccountId(accountId).firstOrNull { it.id == childId }
+    }
+
+    suspend fun markChildFaceEnrolled(accountId: Int, childId: Int, enrolled: Boolean) {
+        val child = getChildById(accountId, childId) ?: return
+        childDao.update(
+            child.copy(
+                isFaceEnrolled = enrolled,
+                updatedAt = System.currentTimeMillis()
+            )
+        )
+    }
+}
