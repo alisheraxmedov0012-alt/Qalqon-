@@ -3,7 +3,7 @@
     <string name="app_name">Qalqon</string>
 
     <string name="welcome_title">Qalqonga xush kelibsiz</string>
-    <string name="welcome_subtitle">Bu ilova ota-onalarga bolalardan telefon foydalanishini nazorat qilishda yordam beradi</string>
+    <string name="welcome_subtitle">Bu ilova ota-onalarga bolalardan telefon foydalanishini nazorat qilishda yordam beradi.</string>
     <string name="welcome_register">Ro\'yxatdan o\'tish</string>
     <string name="welcome_login">Kirish</string>
 
@@ -28,6 +28,10 @@
     <string name="btn_logout">Chiqish</string>
     <string name="btn_save">Saqlash</string>
     <string name="btn_delete">O\'chirish</string>
+    <string name="btn_enroll_face">Yuzni ro\'yxatdan o\'tkazish</string>
+    <string name="btn_next_step">Keyingi qadam</string>
+    <string name="btn_finish_enrollment">Yakunlash</string>
+    <string name="btn_permission_given_placeholder">Ruxsat berildi deb davom etish</string>
 
     <string name="home_title">Bosh sahifa</string>
     <string name="home_status_off">Himoya hozircha o\'chirilgan</string>
@@ -44,6 +48,7 @@
 
     <string name="parent_title">Ota-ona profili</string>
     <string name="parent_display_name_hint">Ko\'rsatiladigan ism</string>
+    <string name="parent_face_title">Ota-ona yuzi</string>
 
     <string name="children_title">Bolalar profillari</string>
     <string name="children_name_hint">Bola ismi</string>
@@ -69,4 +74,19 @@
 
     <string name="protected_apps_title">Himoyalangan ilovalar</string>
     <string name="protected_apps_empty">Hozircha ilovalar yo\'q</string>
+
+    <string name="face_enrolled">Yuz ro\'yxatdan o\'tgan</string>
+    <string name="face_not_enrolled">Yuz hali ro\'yxatdan o\'tmagan</string>
+    <string name="saved_text">Saqlandi</string>
+
+    <string name="camera_permission_needed">Kamera ruxsati kerak</string>
+    <string name="camera_permission_note">Hozircha bu test bosqichi. Keyingi blokda haqiqiy kamera ulanishi qo\'shiladi.</string>
+    <string name="enrollment_intro">Yuzni ro\'yxatdan o\'tkazish uchun quyidagi qadamlarni bajaring.</string>
+    <string name="enroll_step_1">1-qadam: To\'g\'riga qarang</string>
+    <string name="enroll_step_2">2-qadam: Chapga qarang</string>
+    <string name="enroll_step_3">3-qadam: O\'ngga qarang</string>
+    <string name="enroll_step_4">4-qadam: Biroz yuqoriga qarang</string>
+
+    <string name="child_face_title">Bola yuzi</string>
+    <string name="child_name_label">Bola</string>
 </resources>
