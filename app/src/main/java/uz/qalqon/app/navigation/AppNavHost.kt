@@ -1,8 +1,10 @@
 package uz.qalqon.app.navigation
 
 import androidx.compose.runtime.*
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import uz.qalqon.app.data.local.ProtectedAppDao
@@ -114,7 +116,10 @@ fun AppNavHost(
             ParentProfileScreen(
                 sessionManager = sessionManager,
                 profileRepository = profileRepository,
-                onBackClick = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() },
+                onEnrollFaceClick = {
+                    navController.navigate(AppScreen.ParentFaceEnrollment.route)
+                }
             )
         }
 
@@ -122,7 +127,10 @@ fun AppNavHost(
             ChildProfilesScreen(
                 sessionManager = sessionManager,
                 profileRepository = profileRepository,
-                onBackClick = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() },
+                onEnrollFaceClick = { childId ->
+                    navController.navigate(AppScreen.ChildFaceEnrollment.createRoute(childId))
+                }
             )
         }
 
@@ -139,5 +147,33 @@ fun AppNavHost(
                 onBackClick = { navController.popBackStack() }
             )
         }
+
+        composable(AppScreen.ParentFaceEnrollment.route) {
+            ParentFaceEnrollmentScreen(
+                sessionManager = sessionManager,
+                profileRepository = profileRepository,
+                onBackClick = { navController.popBackStack() },
+                onEnrollmentComplete = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable(
+            route = AppScreen.ChildFaceEnrollment.route,
+            arguments = listOf(navArgument("childId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val childId = backStackEntry.arguments?.getInt("childId") ?: 0
+            ChildFaceEnrollmentScreen(
+                childId = childId,
+                sessionManager = sessionManager,
+                profileRepository = profileRepository,
+                onBackClick = { navController.popBackStack() },
+                onEnrollmentComplete = {
+                    navController.popBackStack()
+                }
+            )
+        }
     }
 }
+
