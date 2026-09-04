@@ -7,13 +7,15 @@ import androidx.room.RoomDatabase
     entities = [
         UserAccount::class,
         ParentProfile::class,
-        ChildProfile::class
+        ChildProfile::class,
+        ProtectedApp::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userAccountDao(): UserAccountDao
     abstract fun parentProfileDao(): ParentProfileDao
     abstract fun childProfileDao(): ChildProfileDao
+    abstract fun protectedAppDao(): ProtectedAppDao
 }
