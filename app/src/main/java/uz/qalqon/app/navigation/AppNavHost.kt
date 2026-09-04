@@ -5,16 +5,20 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
+import uz.qalqon.app.data.local.ProtectedAppDao
 import uz.qalqon.app.data.repository.AuthRepository
 import uz.qalqon.app.data.repository.ProfileRepository
 import uz.qalqon.app.data.session.SessionManager
+import uz.qalqon.app.data.settings.SettingsRepository
 import uz.qalqon.app.ui.screens.*
 
 @Composable
 fun AppNavHost(
     authRepository: AuthRepository,
     sessionManager: SessionManager,
-    profileRepository: ProfileRepository
+    profileRepository: ProfileRepository,
+    settingsRepository: SettingsRepository,
+    protectedAppDao: ProtectedAppDao
 ) {
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
@@ -90,11 +94,18 @@ fun AppNavHost(
                 sessionManager = sessionManager,
                 authRepository = authRepository,
                 profileRepository = profileRepository,
+                settingsRepository = settingsRepository,
                 onParentProfileClick = {
                     navController.navigate(AppScreen.ParentProfile.route)
                 },
                 onChildProfilesClick = {
                     navController.navigate(AppScreen.ChildProfiles.route)
+                },
+                onSettingsClick = {
+                    navController.navigate(AppScreen.Settings.route)
+                },
+                onProtectedAppsClick = {
+                    navController.navigate(AppScreen.ProtectedApps.route)
                 }
             )
         }
@@ -111,6 +122,20 @@ fun AppNavHost(
             ChildProfilesScreen(
                 sessionManager = sessionManager,
                 profileRepository = profileRepository,
+                onBackClick = { navController.popBackStack() }
+            )
+        }
+
+        composable(AppScreen.Settings.route) {
+            SettingsScreen(
+                settingsRepository = settingsRepository,
+                onBackClick = { navController.popBackStack() }
+            )
+        }
+
+        composable(AppScreen.ProtectedApps.route) {
+            ProtectedAppsScreen(
+                protectedAppDao = protectedAppDao,
                 onBackClick = { navController.popBackStack() }
             )
         }
