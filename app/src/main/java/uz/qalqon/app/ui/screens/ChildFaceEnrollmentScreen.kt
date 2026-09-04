@@ -1,0 +1,111 @@
+package uz.qalqon.app.ui.screens
+
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import kotlinx.coroutines.launch
+import uz.qalqon.app.R
+import uz.qalqon.app.data.repository.ProfileRepository
+import uz.qalqon.app.data.session.SessionManager
+
+@Composable
+fun ChildFaceEnrollmentScreen(
+    childId: Int,
+    sessionManager: SessionManager,
+    profileRepository: ProfileRepository,
+    onBackClick: () -> Unit,
+    onEnrollmentComplete: () -> Unit
+) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val loggedInUserId by sessionManager.loggedInUserId.collectAsState(initial = null)
+
+    var hasCameraPermission by remember {
+        mutableStateOf(
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        )
+    }
+
+    var currentStep by remember { mutableStateOf(1) }
+    var childName by remember { mutableStateOf("") }
+
+    LaunchedEffect(loggedInUserId) {
+        val userId = loggedInUserId ?: return@LaunchedEffect
+        val child = profileRepository.getChildById(userId, childId)
+        childName = child?.childName ?: ""
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp)
+    ) {
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(
+            text = stringResource(R.string.child_face_title),
+            style = MaterialTheme.typography.headlineMedium
+        )
+
+        if (childName.isNotBlank()) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "${stringResource(R.string.child_name_label)}: $childName")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        if (!hasCameraPermission) {
+            Text(text = stringResource(R.string.camera_permission_needed))
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(text = stringResource(R.string.camera_permission_note))
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(onClick = { hasCameraPermission = true }) {
+                Text(text = stringResource(R.string.btn_permission_given_placeholder))
+            }
+        } else {
+            Text(text = stringResource(R.string.enrollment_intro))
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = currentEnrollmentStepText(currentStep))
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            if (currentStep < 4) {
+                Button(onClick = { currentStep++ }) {
+                    Text(text = stringResource(R.string.btn_next_step))
+                }
+            } else {
+                Button(
+                    onClick = {
+                        val userId = loggedInUserId ?: return@Button
+                        scope.launch {
+                            profileRepository.markChildFaceEnrolled(userId, childId, true)
+                            onEnrollmentComplete()
+                        }
+                    }
+                ) {
+                    Text(text = stringResource(R.string.btn_finish_enrollment))
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedButton(onClick = onBackClick) {
+            Text(text = stringResource(R.string.btn_back))
+        }
+    }
+}
+
