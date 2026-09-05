@@ -31,7 +31,8 @@
     <string name="btn_enroll_face">Yuzni ro\'yxatdan o\'tkazish</string>
     <string name="btn_next_step">Keyingi qadam</string>
     <string name="btn_finish_enrollment">Yakunlash</string>
-    <string name="btn_permission_given_placeholder">Ruxsat berildi deb davom etish</string>
+    <string name="btn_grant_camera">Kamera ruxsatini berish</string>
+    <string name="btn_permission_given_placeholder">Kamera ruxsatini berish</string>
 
     <string name="home_title">Bosh sahifa</string>
     <string name="home_status_off">Himoya hozircha o\'chirilgan</string>
@@ -80,7 +81,8 @@
     <string name="saved_text">Saqlandi</string>
 
     <string name="camera_permission_needed">Kamera ruxsati kerak</string>
-    <string name="camera_permission_note">Hozircha bu test bosqichi. Keyingi blokda haqiqiy kamera ulanishi qo\'shiladi.</string>
+    <string name="camera_permission_note">Yuzni ro\'yxatdan o\'tkazish uchun kameraga ruxsat berish kerak.</string>
+    <string name="camera_permission_note_real">Yuzni ro\'yxatdan o\'tkazish uchun kameraga ruxsat berish kerak.</string>
     <string name="enrollment_intro">Yuzni ro\'yxatdan o\'tkazish uchun quyidagi qadamlarni bajaring.</string>
     <string name="enroll_step_1">1-qadam: To\'g\'riga qarang</string>
     <string name="enroll_step_2">2-qadam: Chapga qarang</string>
