@@ -41,6 +41,7 @@
     <string name="home_menu_settings">Sozlamalar</string>
     <string name="home_menu_protected_apps">Himoyalangan ilovalar</string>
     <string name="home_menu_recognition_debug">Tanib olishni tekshirish</string>
+    <string name="home_menu_protection_debug">Himoyani tekshirish</string>
     <string name="home_user_name">Ism</string>
     <string name="home_user_phone">Telefon</string>
     <string name="home_parent_status">Ota-ona profili</string>
@@ -99,4 +100,14 @@
     <string name="recognition_set_unknown">Noma\'lum foydalanuvchi deb ko\'rsatish</string>
     <string name="recognition_set_no_face">Yuz yo\'q deb ko\'rsatish</string>
     <string name="recognition_no_face">Yuz aniqlanmadi</string>
+
+    <string name="protection_debug_title">Himoyani tekshirish</string>
+    <string name="protection_current_state">Joriy himoya holati</string>
+    <string name="protection_debug_hint">Quyidagi tugmalar orqali tanib olish natijasini almashtirib himoya holatini tekshiring.</string>
+    <string name="protection_state_unprotected">Himoya yo\'q</string>
+    <string name="protection_state_soft">Yumshoq blok</string>
+    <string name="protection_state_hard">Qattiq blok</string>
+    <string name="protection_state_recovering">Tiklanmoqda</string>
+    <string name="protection_set_recovering">Tiklanish holatiga o\'tkazish</string>
+    <string name="protection_reset">Holatni tiklash</string>
 </resources>
