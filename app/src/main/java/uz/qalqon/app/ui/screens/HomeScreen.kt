@@ -15,8 +15,8 @@ import uz.qalqon.app.R
 import uz.qalqon.app.data.repository.AuthRepository
 import uz.qalqon.app.data.repository.ProfileRepository
 import uz.qalqon.app.data.session.SessionManager
-import uz.qalqon.app.data.settings.SettingsRepository
 import uz.qalqon.app.data.settings.AppSettings
+import uz.qalqon.app.data.settings.SettingsRepository
 
 @Composable
 fun HomeScreen(
@@ -28,7 +28,8 @@ fun HomeScreen(
     onChildProfilesClick: () -> Unit,
     onSettingsClick: () -> Unit,
     onProtectedAppsClick: () -> Unit,
-    onRecognitionDebugClick: () -> Unit
+    onRecognitionDebugClick: () -> Unit,
+    onProtectionDebugClick: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val loggedInUserId by sessionManager.loggedInUserId.collectAsState(initial = null)
@@ -126,6 +127,12 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        Button(onClick = onProtectionDebugClick, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.home_menu_protection_debug))
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         OutlinedButton(
             onClick = {
                 scope.launch {
@@ -146,3 +153,4 @@ private fun scanModeLabel(mode: String): String {
         else -> "Muvozanatli"
     }
 }
+
