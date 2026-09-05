@@ -32,7 +32,6 @@
     <string name="btn_next_step">Keyingi qadam</string>
     <string name="btn_finish_enrollment">Yakunlash</string>
     <string name="btn_grant_camera">Kamera ruxsatini berish</string>
-    <string name="btn_permission_given_placeholder">Kamera ruxsatini berish</string>
 
     <string name="home_title">Bosh sahifa</string>
     <string name="home_status_off">Himoya hozircha o\'chirilgan</string>
@@ -41,6 +40,7 @@
     <string name="home_menu_children">Bolalar profillari</string>
     <string name="home_menu_settings">Sozlamalar</string>
     <string name="home_menu_protected_apps">Himoyalangan ilovalar</string>
+    <string name="home_menu_recognition_debug">Tanib olishni tekshirish</string>
     <string name="home_user_name">Ism</string>
     <string name="home_user_phone">Telefon</string>
     <string name="home_parent_status">Ota-ona profili</string>
@@ -91,4 +91,12 @@
 
     <string name="child_face_title">Bola yuzi</string>
     <string name="child_name_label">Bola</string>
+
+    <string name="recognition_debug_title">Tanib olishni tekshirish</string>
+    <string name="recognition_current_result">Joriy natija</string>
+    <string name="recognition_set_parent">Ota-onani tanildi deb ko\'rsatish</string>
+    <string name="recognition_set_child">Bolani tanildi deb ko\'rsatish</string>
+    <string name="recognition_set_unknown">Noma\'lum foydalanuvchi deb ko\'rsatish</string>
+    <string name="recognition_set_no_face">Yuz yo\'q deb ko\'rsatish</string>
+    <string name="recognition_no_face">Yuz aniqlanmadi</string>
 </resources>
