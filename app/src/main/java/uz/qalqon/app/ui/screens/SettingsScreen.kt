@@ -1,137 +1,144 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Qalqon</string>
+package uz.qalqon.app.ui.screens
 
-    <string name="welcome_title">Qalqonga xush kelibsiz</string>
-    <string name="welcome_subtitle">Bu ilova ota-onalarga bolalardan telefon foydalanishini nazorat qilishda yordam beradi.</string>
-    <string name="welcome_register">Ro\'yxatdan o\'tish</string>
-    <string name="welcome_login">Kirish</string>
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
+import uz.qalqon.app.R
+import uz.qalqon.app.data.repository.AppResetRepository
+import uz.qalqon.app.data.settings.SettingsRepository
 
-    <string name="register_title">Ro\'yxatdan o\'tish</string>
-    <string name="register_subtitle">Hisob yaratish uchun to\'liq ism va telefon raqamini kiriting</string>
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SettingsScreen(
+    settingsRepository: SettingsRepository,
+    appResetRepository: AppResetRepository,
+    onBackClick: () -> Unit
+) {
+    val scope = rememberCoroutineScope()
 
-    <string name="login_title">Kirish</string>
-    <string name="login_subtitle">Davom etish uchun telefon raqami va PIN-kodni kiriting</string>
+    val protectionEnabled by settingsRepository.isProtectionEnabled.collectAsState(initial = false)
+    val lowBatterySaving by settingsRepository.isLowBatterySaving.collectAsState(initial = false)
 
-    <string name="createpin_title">PIN-kod yarating</string>
-    <string name="createpin_subtitle">Hisobingizni himoyalash uchun 4 yoki 6 xonali PIN belgilang</string>
+    var showResetDialog by remember { mutableStateOf(false) }
 
-    <string name="label_full_name">To\'liq ism</string>
-    <string name="label_phone">Telefon raqami</string>
-    <string name="label_pin">PIN-kod</string>
-    <string name="label_pin_confirm">PIN-kodni takrorlang</string>
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.settings_title)) },
+                navigationIcon = {
+                    IconButton(onClick = onBackClick) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.btn_back)
+                        )
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.settings_protection),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Switch(
+                    checked = protectionEnabled,
+                    onCheckedChange = { enabled ->
+                        scope.launch {
+                            settingsRepository.setProtectionEnabled(enabled)
+                        }
+                    }
+                )
+            }
 
-    <string name="btn_continue">Davom etish</string>
-    <string name="btn_create">Yaratish</string>
-    <string name="btn_login">Kirish</string>
-    <string name="btn_back">Orqaga</string>
-    <string name="btn_logout">Chiqish</string>
-    <string name="btn_save">Saqlash</string>
-    <string name="btn_delete">O\'chirish</string>
-    <string name="btn_enroll_face">Yuzni ro\'yxatdan o\'tkazish</string>
-    <string name="btn_next_step">Keyingi qadam</string>
-    <string name="btn_finish_enrollment">Yakunlash</string>
-    <string name="btn_grant_camera">Kamera ruxsatini berish</string>
+            HorizontalDivider()
 
-    <string name="home_title">Bosh sahifa</string>
-    <string name="home_status_off">Himoya hozircha o\'chirilgan</string>
-    <string name="home_status_on">Himoya yoqilgan</string>
-    <string name="home_menu_parent">Ota-ona profili</string>
-    <string name="home_menu_children">Bolalar profillari</string>
-    <string name="home_menu_settings">Sozlamalar</string>
-    <string name="home_menu_protected_apps">Himoyalangan ilovalar</string>
-    <string name="home_menu_recognition_debug">Tanib olishni tekshirish</string>
-    <string name="home_menu_protection_debug">Himoyani tekshirish</string>
-    <string name="home_menu_activity_log">Faoliyat jurnali</string>
-    <string name="home_menu_privacy">Maxfiylik</string>
-    <string name="home_menu_help">Yordam</string>
-    <string name="home_user_name">Ism</string>
-    <string name="home_user_phone">Telefon</string>
-    <string name="home_parent_status">Ota-ona profili</string>
-    <string name="home_children_count">Bolalar soni</string>
-    <string name="home_scan_mode">Skanerlash rejimi</string>
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.settings_low_battery),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Switch(
+                    checked = lowBatterySaving,
+                    onCheckedChange = { enabled ->
+                        scope.launch {
+                            settingsRepository.setLowBatterySaving(enabled)
+                        }
+                    }
+                )
+            }
 
-    <string name="parent_title">Ota-ona profili</string>
-    <string name="parent_display_name_hint">Ko\'rsatiladigan ism</string>
-    <string name="parent_face_title">Ota-ona yuzi</string>
+            HorizontalDivider()
 
-    <string name="children_title">Bolalar profillari</string>
-    <string name="children_name_hint">Bola ismi</string>
-    <string name="children_add">Bola qo\'shish</string>
-    <string name="children_empty">Hozircha bola qo\'shilmagan</string>
-    <string name="children_level_label">Cheklov darajasi</string>
+            OutlinedButton(
+                onClick = {
+                    scope.launch {
+                        appResetRepository.clearActivityLogs()
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = stringResource(R.string.settings_clear_logs))
+            }
 
-    <string name="settings_title">Sozlamalar</string>
-    <string name="settings_protection">Himoya yoqilsin</string>
-    <string name="settings_scan_mode">Skanerlash rejimi</string>
-    <string name="settings_unknown_policy">Noma\'lum foydalanuvchi siyosati</string>
-    <string name="settings_no_face_policy">Yuz aniqlanmasa</string>
-    <string name="settings_recovery_delay">Qayta tiklanish vaqti</string>
-    <string name="settings_low_battery">Kam batareyada tejash</string>
-    <string name="settings_clear_logs">Faoliyat jurnalini tozalash</string>
-    <string name="settings_reset_all">Asosiy ma\'lumotlarni tiklash</string>
+            Button(
+                onClick = { showResetDialog = true },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+            ) {
+                Text(text = stringResource(R.string.settings_reset_all))
+            }
+        }
+    }
 
-    <string name="scan_battery">Tejash</string>
-    <string name="scan_balanced">Muvozanatli</string>
-    <string name="scan_strict">Qattiq</string>
-
-    <string name="policy_allow">Ruxsat</string>
-    <string name="policy_soft">Yumshoq blok</string>
-    <string name="policy_hard">Qattiq blok</string>
-
-    <string name="protected_apps_title">Himoyalangan ilovalar</string>
-    <string name="protected_apps_empty">Hozircha ilovalar yo\'q</string>
-
-    <string name="face_enrolled">Yuz ro\'yxatdan o\'tgan</string>
-    <string name="face_not_enrolled">Yuz hali ro\'yxatdan o\'tmagan</string>
-    <string name="saved_text">Saqlandi</string>
-
-    <string name="camera_permission_needed">Kamera ruxsati kerak</string>
-    <string name="camera_permission_note">Yuzni ro\'yxatdan o\'tkazish uchun kameraga ruxsat berish kerak.</string>
-    <string name="camera_permission_note_real">Yuzni ro\'yxatdan o\'tkazish uchun kameraga ruxsat berish kerak.</string>
-    <string name="enrollment_intro">Yuzni ro\'yxatdan o\'tkazish uchun quyidagi qadamlarni bajaring.</string>
-    <string name="enroll_step_1">1-qadam: To\'g\'riga qarang</string>
-    <string name="enroll_step_2">2-qadam: Chapga qarang</string>
-    <string name="enroll_step_3">3-qadam: O\'ngga qarang</string>
-    <string name="enroll_step_4">4-qadam: Biroz yuqoriga qarang</string>
-
-    <string name="child_face_title">Bola yuzi</string>
-    <string name="child_name_label">Bola</string>
-
-    <string name="recognition_debug_title">Tanib olishni tekshirish</string>
-    <string name="recognition_current_result">Joriy natija</string>
-    <string name="recognition_set_parent">Ota-onani tanildi deb ko\'rsatish</string>
-    <string name="recognition_set_child">Bolani tanildi deb ko\'rsatish</string>
-    <string name="recognition_set_unknown">Noma\'lum foydalanuvchi deb ko\'rsatish</string>
-    <string name="recognition_set_no_face">Yuz yo\'q deb ko\'rsatish</string>
-    <string name="recognition_no_face">Yuz aniqlanmadi</string>
-
-    <string name="protection_debug_title">Himoyani tekshirish</string>
-    <string name="protection_current_state">Joriy himoya holati</string>
-    <string name="protection_debug_hint">Quyidagi tugmalar orqali tanib olish natijasini almashtirib himoya holatini tekshiring.</string>
-    <string name="protection_state_unprotected">Himoya yo\'q</string>
-    <string name="protection_state_soft">Yumshoq blok</string>
-    <string name="protection_state_hard">Qattiq blok</string>
-    <string name="protection_state_recovering">Tiklanmoqda</string>
-    <string name="protection_set_recovering">Tiklanish holatiga o\'tkazish</string>
-    <string name="protection_reset">Holatni tiklash</string>
-
-    <string name="overlay_block_title">Ilova bloklandi</string>
-    <string name="overlay_pin_label">PIN-kodni kiriting</string>
-    <string name="overlay_unlock_button">Ochish</string>
-
-    <string name="activity_log_title">Faoliyat jurnali</string>
-    <string name="activity_log_empty">Hozircha faoliyat yozuvlari yo\'q</string>
-    <string name="activity_log_clear">Jurnalni tozalash</string>
-
-    <string name="privacy_title">Maxfiylik</string>
-    <string name="privacy_line_1">Qalqon asosan internetsiz ishlash uchun mo\'ljallangan.</string>
-    <string name="privacy_line_2">Yuzga oid ma\'lumotlar keyinchalik faqat telefonda saqlanadigan tarzda ishlanadi.</string>
-    <string name="privacy_line_3">Hozirgi MVP versiyada barcha funksiyalar test bosqichida.</string>
-    <string name="privacy_line_4">Foydalanuvchi ma\'lumotlari tashqi serverga yuborilmaydi.</string>
-
-    <string name="help_title">Yordam</string>
-    <string name="help_line_1">1. Avval ro\'yxatdan o\'ting yoki kiring.</string>
-    <string name="help_line_2">2. Ota-ona profilini va bolalar profillarini yarating.</string>
-    <string name="help_line_3">3. Sozlamalar, yuzni ro\'yxatdan o\'tkazish va himoya holatini bosqichma-bosqich sozlang.</string>
-</resources>
+    if (showResetDialog) {
+        AlertDialog(
+            onDismissRequest = { showResetDialog = false },
+            title = { Text(stringResource(R.string.settings_reset_all)) },
+            text = { Text("Barcha ma'lumotlarni o'chirib tashlashni tasdiqlaysizmi?") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showResetDialog = false
+                        scope.launch {
+                            appResetRepository.resetAll()
+                            onBackClick()
+                        }
+                    }
+                ) {
+                    Text(stringResource(R.string.btn_delete))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showResetDialog = false }) {
+                    Text(stringResource(R.string.btn_back))
+                }
+            }
+        )
+    }
+}
