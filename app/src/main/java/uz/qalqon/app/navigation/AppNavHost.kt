@@ -4,10 +4,11 @@ import androidx.compose.runtime.*
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import uz.qalqon.app.data.local.ProtectedAppDao
+import uz.qalqon.app.data.recognition.RecognitionDebugRepository
 import uz.qalqon.app.data.repository.AuthRepository
 import uz.qalqon.app.data.repository.ProfileRepository
 import uz.qalqon.app.data.session.SessionManager
@@ -24,6 +25,7 @@ fun AppNavHost(
 ) {
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
+    val recognitionDebugRepository = remember { RecognitionDebugRepository() }
 
     var pendingFullName by remember { mutableStateOf("") }
     var pendingPhone by remember { mutableStateOf("") }
@@ -108,6 +110,9 @@ fun AppNavHost(
                 },
                 onProtectedAppsClick = {
                     navController.navigate(AppScreen.ProtectedApps.route)
+                },
+                onRecognitionDebugClick = {
+                    navController.navigate(AppScreen.RecognitionDebug.route)
                 }
             )
         }
@@ -174,6 +179,12 @@ fun AppNavHost(
                 }
             )
         }
+
+        composable(AppScreen.RecognitionDebug.route) {
+            RecognitionDebugScreen(
+                recognitionDebugRepository = recognitionDebugRepository,
+                onBackClick = { navController.popBackStack() }
+            )
+        }
     }
 }
-
