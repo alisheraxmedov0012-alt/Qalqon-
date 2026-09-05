@@ -11,6 +11,8 @@ import uz.qalqon.app.data.local.ProtectedAppDao
 import uz.qalqon.app.data.protection.ProtectionDebugEngine
 import uz.qalqon.app.data.protection.ProtectionOverlayController
 import uz.qalqon.app.data.recognition.RecognitionDebugRepository
+import uz.qalqon.app.data.repository.ActivityLogRepository
+import uz.qalqon.app.data.repository.AppResetRepository
 import uz.qalqon.app.data.repository.AuthRepository
 import uz.qalqon.app.data.repository.ProfileRepository
 import uz.qalqon.app.data.session.SessionManager
@@ -23,7 +25,9 @@ fun AppNavHost(
     sessionManager: SessionManager,
     profileRepository: ProfileRepository,
     settingsRepository: SettingsRepository,
-    protectedAppDao: ProtectedAppDao
+    protectedAppDao: ProtectedAppDao,
+    activityLogRepository: ActivityLogRepository,
+    appResetRepository: AppResetRepository
 ) {
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
@@ -67,6 +71,7 @@ fun AppNavHost(
                         val result = authRepository.login(phone, pin)
                         result.onSuccess { userId ->
                             sessionManager.saveLoggedInUserId(userId)
+                            activityLogRepository.add("login", "Foydalanuvchi tizimga kirdi")
                             navController.navigate(AppScreen.Home.route) {
                                 popUpTo(0)
                             }
@@ -88,6 +93,7 @@ fun AppNavHost(
                         )
                         result.onSuccess { userId ->
                             sessionManager.saveLoggedInUserId(userId)
+                            activityLogRepository.add("register", "Yangi foydalanuvchi ro'yxatdan o'tdi")
                             navController.navigate(AppScreen.Home.route) {
                                 popUpTo(0)
                             }
@@ -103,24 +109,15 @@ fun AppNavHost(
                 authRepository = authRepository,
                 profileRepository = profileRepository,
                 settingsRepository = settingsRepository,
-                onParentProfileClick = {
-                    navController.navigate(AppScreen.ParentProfile.route)
-                },
-                onChildProfilesClick = {
-                    navController.navigate(AppScreen.ChildProfiles.route)
-                },
-                onSettingsClick = {
-                    navController.navigate(AppScreen.Settings.route)
-                },
-                onProtectedAppsClick = {
-                    navController.navigate(AppScreen.ProtectedApps.route)
-                },
-                onRecognitionDebugClick = {
-                    navController.navigate(AppScreen.RecognitionDebug.route)
-                },
-                onProtectionDebugClick = {
-                    navController.navigate(AppScreen.ProtectionDebug.route)
-                }
+                onParentProfileClick = { navController.navigate(AppScreen.ParentProfile.route) },
+                onChildProfilesClick = { navController.navigate(AppScreen.ChildProfiles.route) },
+                onSettingsClick = { navController.navigate(AppScreen.Settings.route) },
+                onProtectedAppsClick = { navController.navigate(AppScreen.ProtectedApps.route) },
+                onRecognitionDebugClick = { navController.navigate(AppScreen.RecognitionDebug.route) },
+                onProtectionDebugClick = { navController.navigate(AppScreen.ProtectionDebug.route) },
+                onActivityLogClick = { navController.navigate(AppScreen.ActivityLog.route) },
+                onPrivacyClick = { navController.navigate(AppScreen.Privacy.route) },
+                onHelpClick = { navController.navigate(AppScreen.Help.route) }
             )
         }
 
@@ -129,9 +126,7 @@ fun AppNavHost(
                 sessionManager = sessionManager,
                 profileRepository = profileRepository,
                 onBackClick = { navController.popBackStack() },
-                onEnrollFaceClick = {
-                    navController.navigate(AppScreen.ParentFaceEnrollment.route)
-                }
+                onEnrollFaceClick = { navController.navigate(AppScreen.ParentFaceEnrollment.route) }
             )
         }
 
@@ -149,6 +144,7 @@ fun AppNavHost(
         composable(AppScreen.Settings.route) {
             SettingsScreen(
                 settingsRepository = settingsRepository,
+                appResetRepository = appResetRepository,
                 onBackClick = { navController.popBackStack() }
             )
         }
@@ -166,6 +162,9 @@ fun AppNavHost(
                 profileRepository = profileRepository,
                 onBackClick = { navController.popBackStack() },
                 onEnrollmentComplete = {
+                    scope.launch {
+                        activityLogRepository.add("parent_face", "Ota-ona yuzi ro'yxatdan o'tkazildi")
+                    }
                     navController.popBackStack()
                 }
             )
@@ -182,6 +181,9 @@ fun AppNavHost(
                 profileRepository = profileRepository,
                 onBackClick = { navController.popBackStack() },
                 onEnrollmentComplete = {
+                    scope.launch {
+                        activityLogRepository.add("child_face", "Bola yuzi ro'yxatdan o'tkazildi")
+                    }
                     navController.popBackStack()
                 }
             )
@@ -202,6 +204,21 @@ fun AppNavHost(
                 protectionOverlayController = protectionOverlayController,
                 onBackClick = { navController.popBackStack() }
             )
+        }
+
+        composable(AppScreen.ActivityLog.route) {
+            ActivityLogScreen(
+                activityLogRepository = activityLogRepository,
+                onBackClick = { navController.popBackStack() }
+            )
+        }
+
+        composable(AppScreen.Privacy.route) {
+            PrivacyScreen(onBackClick = { navController.popBackStack() })
+        }
+
+        composable(AppScreen.Help.route) {
+            HelpScreen(onBackClick = { navController.popBackStack() })
         }
     }
 }
