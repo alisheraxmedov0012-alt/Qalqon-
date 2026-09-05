@@ -42,6 +42,9 @@
     <string name="home_menu_protected_apps">Himoyalangan ilovalar</string>
     <string name="home_menu_recognition_debug">Tanib olishni tekshirish</string>
     <string name="home_menu_protection_debug">Himoyani tekshirish</string>
+    <string name="home_menu_activity_log">Faoliyat jurnali</string>
+    <string name="home_menu_privacy">Maxfiylik</string>
+    <string name="home_menu_help">Yordam</string>
     <string name="home_user_name">Ism</string>
     <string name="home_user_phone">Telefon</string>
     <string name="home_parent_status">Ota-ona profili</string>
@@ -65,6 +68,8 @@
     <string name="settings_no_face_policy">Yuz aniqlanmasa</string>
     <string name="settings_recovery_delay">Qayta tiklanish vaqti</string>
     <string name="settings_low_battery">Kam batareyada tejash</string>
+    <string name="settings_clear_logs">Faoliyat jurnalini tozalash</string>
+    <string name="settings_reset_all">Asosiy ma\'lumotlarni tiklash</string>
 
     <string name="scan_battery">Tejash</string>
     <string name="scan_balanced">Muvozanatli</string>
@@ -114,4 +119,19 @@
     <string name="overlay_block_title">Ilova bloklandi</string>
     <string name="overlay_pin_label">PIN-kodni kiriting</string>
     <string name="overlay_unlock_button">Ochish</string>
+
+    <string name="activity_log_title">Faoliyat jurnali</string>
+    <string name="activity_log_empty">Hozircha faoliyat yozuvlari yo\'q</string>
+    <string name="activity_log_clear">Jurnalni tozalash</string>
+
+    <string name="privacy_title">Maxfiylik</string>
+    <string name="privacy_line_1">Qalqon asosan internetsiz ishlash uchun mo\'ljallangan.</string>
+    <string name="privacy_line_2">Yuzga oid ma\'lumotlar keyinchalik faqat telefonda saqlanadigan tarzda ishlanadi.</string>
+    <string name="privacy_line_3">Hozirgi MVP versiyada barcha funksiyalar test bosqichida.</string>
+    <string name="privacy_line_4">Foydalanuvchi ma\'lumotlari tashqi serverga yuborilmaydi.</string>
+
+    <string name="help_title">Yordam</string>
+    <string name="help_line_1">1. Avval ro\'yxatdan o\'ting yoki kiring.</string>
+    <string name="help_line_2">2. Ota-ona profilini va bolalar profillarini yarating.</string>
+    <string name="help_line_3">3. Sozlamalar, yuzni ro\'yxatdan o\'tkazish va himoya holatini bosqichma-bosqich sozlang.</string>
 </resources>
