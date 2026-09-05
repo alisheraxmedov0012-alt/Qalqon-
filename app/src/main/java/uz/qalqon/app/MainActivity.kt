@@ -7,6 +7,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.room.Room
 import uz.qalqon.app.data.local.AppDatabase
+import uz.qalqon.app.data.repository.ActivityLogRepository
+import uz.qalqon.app.data.repository.AppResetRepository
 import uz.qalqon.app.data.repository.AuthRepository
 import uz.qalqon.app.data.repository.ProfileRepository
 import uz.qalqon.app.data.session.SessionManager
@@ -14,6 +16,10 @@ import uz.qalqon.app.data.settings.SettingsRepository
 import uz.qalqon.app.navigation.AppNavHost
 
 class MainActivity : ComponentActivity() {
+
+    private val sessionManager by lazy {
+        SessionManager(applicationContext)
+    }
 
     private val database by lazy {
         Room.databaseBuilder(
@@ -36,12 +42,23 @@ class MainActivity : ComponentActivity() {
         )
     }
 
-    private val sessionManager by lazy {
-        SessionManager(applicationContext)
-    }
-
     private val settingsRepository by lazy {
         SettingsRepository(applicationContext)
+    }
+
+    private val activityLogRepository by lazy {
+        ActivityLogRepository(database.activityLogDao())
+    }
+
+    private val appResetRepository by lazy {
+        AppResetRepository(
+            userAccountDao = database.userAccountDao(),
+            parentProfileDao = database.parentProfileDao(),
+            childProfileDao = database.childProfileDao(),
+            protectedAppDao = database.protectedAppDao(),
+            activityLogDao = database.activityLogDao(),
+            sessionManager = sessionManager
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +70,9 @@ class MainActivity : ComponentActivity() {
                     sessionManager = sessionManager,
                     profileRepository = profileRepository,
                     settingsRepository = settingsRepository,
-                    protectedAppDao = database.protectedAppDao()
+                    protectedAppDao = database.protectedAppDao(),
+                    activityLogRepository = activityLogRepository,
+                    appResetRepository = appResetRepository
                 )
             }
         }
