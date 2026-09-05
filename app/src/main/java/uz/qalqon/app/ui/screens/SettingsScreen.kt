@@ -24,9 +24,10 @@ fun SettingsScreen(
     onBackClick: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
+    val settingsState by settingsRepository.settingsFlow.collectAsState(initial = null)
 
-    val protectionEnabled by settingsRepository.isProtectionEnabled.collectAsState(initial = false)
-    val lowBatterySaving by settingsRepository.isLowBatterySaving.collectAsState(initial = false)
+    val protectionEnabled = settingsState?.protectionEnabled ?: false
+    val lowBatterySaving = settingsState?.lowBatteryModeEnabled ?: false
 
     var showResetDialog by remember { mutableStateOf(false) }
 
@@ -87,7 +88,7 @@ fun SettingsScreen(
                     checked = lowBatterySaving,
                     onCheckedChange = { enabled ->
                         scope.launch {
-                            settingsRepository.setLowBatterySaving(enabled)
+                            settingsRepository.setLowBatteryModeEnabled(enabled)
                         }
                     }
                 )
