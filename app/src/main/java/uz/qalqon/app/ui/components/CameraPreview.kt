@@ -5,9 +5,11 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
@@ -15,7 +17,9 @@ import androidx.core.content.ContextCompat
 
 @SuppressLint("UnsafeOptInUsageError")
 @Composable
-fun CameraPreview() {
+fun CameraPreview(
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -27,13 +31,13 @@ fun CameraPreview() {
 
     DisposableEffect(Unit) {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
-
         val executor = ContextCompat.getMainExecutor(context)
+
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
 
             val preview = Preview.Builder().build().also {
-                it.surfaceProvider = previewView.surfaceProvider
+                it.setSurfaceProvider(previewView.surfaceProvider)
             }
 
             val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
@@ -49,8 +53,17 @@ fun CameraPreview() {
             }
         }, executor)
 
-        onDispose { }
+        onDispose {
+            try {
+                val cameraProvider = cameraProviderFuture.get()
+                cameraProvider.unbindAll()
+            } catch (_: Exception) {
+            }
+        }
     }
 
-    AndroidView(factory = { previewView })
+    AndroidView(
+        factory = { previewView },
+        modifier = modifier.fillMaxSize()
+    )
 }
