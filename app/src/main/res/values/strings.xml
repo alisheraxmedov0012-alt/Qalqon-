@@ -110,4 +110,8 @@
     <string name="protection_state_recovering">Tiklanmoqda</string>
     <string name="protection_set_recovering">Tiklanish holatiga o\'tkazish</string>
     <string name="protection_reset">Holatni tiklash</string>
+
+    <string name="overlay_block_title">Ilova bloklandi</string>
+    <string name="overlay_pin_label">PIN-kodni kiriting</string>
+    <string name="overlay_unlock_button">Ochish</string>
 </resources>
