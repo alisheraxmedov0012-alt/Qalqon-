@@ -29,7 +29,10 @@ fun HomeScreen(
     onSettingsClick: () -> Unit,
     onProtectedAppsClick: () -> Unit,
     onRecognitionDebugClick: () -> Unit,
-    onProtectionDebugClick: () -> Unit
+    onProtectionDebugClick: () -> Unit,
+    onActivityLogClick: () -> Unit,
+    onPrivacyClick: () -> Unit,
+    onHelpClick: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val loggedInUserId by sessionManager.loggedInUserId.collectAsState(initial = null)
@@ -47,11 +50,7 @@ fun HomeScreen(
         phone = user?.phoneNumber ?: ""
 
         val parent = profileRepository.getParentProfile(userId)
-        parentStatus = if (parent == null) {
-            "Yaratilmagan"
-        } else {
-            parent.displayName
-        }
+        parentStatus = if (parent == null) "Yaratilmagan" else parent.displayName
 
         childCount = profileRepository.getChildProfiles(userId).size
     }
@@ -129,6 +128,24 @@ fun HomeScreen(
 
         Button(onClick = onProtectionDebugClick, modifier = Modifier.fillMaxWidth()) {
             Text(text = stringResource(R.string.home_menu_protection_debug))
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(onClick = onActivityLogClick, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.home_menu_activity_log))
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(onClick = onPrivacyClick, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.home_menu_privacy))
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(onClick = onHelpClick, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.home_menu_help))
         }
 
         Spacer(modifier = Modifier.height(12.dp))
