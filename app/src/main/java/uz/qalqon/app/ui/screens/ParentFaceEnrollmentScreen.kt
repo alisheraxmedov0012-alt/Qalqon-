@@ -98,7 +98,7 @@ fun ParentFaceEnrollmentScreen(
 }
 
 @Composable
-private fun currentEnrollmentStepText(step: Int): String {
+internal fun currentEnrollmentStepText(step: Int): String {
     return when (step) {
         1 -> stringResource(R.string.enroll_step_1)
         2 -> stringResource(R.string.enroll_step_2)
