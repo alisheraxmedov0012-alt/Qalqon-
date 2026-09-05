@@ -2,6 +2,8 @@ package uz.qalqon.app.ui.screens
 
 import android.Manifest
 import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -17,6 +19,7 @@ import kotlinx.coroutines.launch
 import uz.qalqon.app.R
 import uz.qalqon.app.data.repository.ProfileRepository
 import uz.qalqon.app.data.session.SessionManager
+import uz.qalqon.app.ui.components.CameraPreview
 
 @Composable
 fun ChildFaceEnrollmentScreen(
@@ -41,6 +44,12 @@ fun ChildFaceEnrollmentScreen(
 
     var currentStep by remember { mutableStateOf(1) }
     var childName by remember { mutableStateOf("") }
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        hasCameraPermission = granted
+    }
 
     LaunchedEffect(loggedInUserId) {
         val userId = loggedInUserId ?: return@LaunchedEffect
@@ -70,14 +79,26 @@ fun ChildFaceEnrollmentScreen(
         if (!hasCameraPermission) {
             Text(text = stringResource(R.string.camera_permission_needed))
             Spacer(modifier = Modifier.height(12.dp))
-            Text(text = stringResource(R.string.camera_permission_note))
+            Text(text = stringResource(R.string.camera_permission_note_real))
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { hasCameraPermission = true }) {
-                Text(text = stringResource(R.string.btn_permission_given_placeholder))
+            Button(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
+                Text(text = stringResource(R.string.btn_grant_camera))
             }
         } else {
             Text(text = stringResource(R.string.enrollment_intro))
+
             Spacer(modifier = Modifier.height(16.dp))
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(320.dp)
+            ) {
+                CameraPreview()
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             Text(text = currentEnrollmentStepText(currentStep))
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -109,3 +130,12 @@ fun ChildFaceEnrollmentScreen(
     }
 }
 
+@Composable
+private fun currentEnrollmentStepText(step: Int): String {
+    return when (step) {
+        1 -> stringResource(R.string.enroll_step_1)
+        2 -> stringResource(R.string.enroll_step_2)
+        3 -> stringResource(R.string.enroll_step_3)
+        else -> stringResource(R.string.enroll_step_4)
+    }
+}
