@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import kotlinx.coroutines.launch
 import uz.qalqon.app.data.local.ProtectedAppDao
+import uz.qalqon.app.data.protection.ProtectionDebugEngine
 import uz.qalqon.app.data.recognition.RecognitionDebugRepository
 import uz.qalqon.app.data.repository.AuthRepository
 import uz.qalqon.app.data.repository.ProfileRepository
@@ -26,6 +27,7 @@ fun AppNavHost(
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
     val recognitionDebugRepository = remember { RecognitionDebugRepository() }
+    val protectionDebugEngine = remember { ProtectionDebugEngine() }
 
     var pendingFullName by remember { mutableStateOf("") }
     var pendingPhone by remember { mutableStateOf("") }
@@ -113,6 +115,9 @@ fun AppNavHost(
                 },
                 onRecognitionDebugClick = {
                     navController.navigate(AppScreen.RecognitionDebug.route)
+                },
+                onProtectionDebugClick = {
+                    navController.navigate(AppScreen.ProtectionDebug.route)
                 }
             )
         }
@@ -183,6 +188,15 @@ fun AppNavHost(
         composable(AppScreen.RecognitionDebug.route) {
             RecognitionDebugScreen(
                 recognitionDebugRepository = recognitionDebugRepository,
+                onBackClick = { navController.popBackStack() }
+            )
+        }
+
+        composable(AppScreen.ProtectionDebug.route) {
+            ProtectionDebugScreen(
+                recognitionDebugRepository = recognitionDebugRepository,
+                settingsRepository = settingsRepository,
+                protectionDebugEngine = protectionDebugEngine,
                 onBackClick = { navController.popBackStack() }
             )
         }
