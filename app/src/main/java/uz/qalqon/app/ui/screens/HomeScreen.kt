@@ -16,6 +16,7 @@ import uz.qalqon.app.data.repository.AuthRepository
 import uz.qalqon.app.data.repository.ProfileRepository
 import uz.qalqon.app.data.session.SessionManager
 import uz.qalqon.app.data.settings.SettingsRepository
+import uz.qalqon.app.data.settings.AppSettings
 
 @Composable
 fun HomeScreen(
@@ -26,13 +27,12 @@ fun HomeScreen(
     onParentProfileClick: () -> Unit,
     onChildProfilesClick: () -> Unit,
     onSettingsClick: () -> Unit,
-    onProtectedAppsClick: () -> Unit
+    onProtectedAppsClick: () -> Unit,
+    onRecognitionDebugClick: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val loggedInUserId by sessionManager.loggedInUserId.collectAsState(initial = null)
-    val settings by settingsRepository.settingsFlow.collectAsState(
-        initial = uz.qalqon.app.data.settings.AppSettings()
-    )
+    val settings by settingsRepository.settingsFlow.collectAsState(initial = AppSettings())
 
     var fullName by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
@@ -96,38 +96,32 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Button(
-            onClick = onParentProfileClick,
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        Button(onClick = onParentProfileClick, modifier = Modifier.fillMaxWidth()) {
             Text(text = stringResource(R.string.home_menu_parent))
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Button(
-            onClick = onChildProfilesClick,
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        Button(onClick = onChildProfilesClick, modifier = Modifier.fillMaxWidth()) {
             Text(text = stringResource(R.string.home_menu_children))
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Button(
-            onClick = onSettingsClick,
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        Button(onClick = onSettingsClick, modifier = Modifier.fillMaxWidth()) {
             Text(text = stringResource(R.string.home_menu_settings))
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Button(
-            onClick = onProtectedAppsClick,
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        Button(onClick = onProtectedAppsClick, modifier = Modifier.fillMaxWidth()) {
             Text(text = stringResource(R.string.home_menu_protected_apps))
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(onClick = onRecognitionDebugClick, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.home_menu_recognition_debug))
         }
 
         Spacer(modifier = Modifier.height(12.dp))
