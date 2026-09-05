@@ -12,12 +12,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import uz.qalqon.app.R
+import uz.qalqon.app.data.repository.AppResetRepository
 import uz.qalqon.app.data.settings.AppSettings
 import uz.qalqon.app.data.settings.SettingsRepository
 
 @Composable
 fun SettingsScreen(
     settingsRepository: SettingsRepository,
+    appResetRepository: AppResetRepository,
     onBackClick: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -139,6 +141,32 @@ fun SettingsScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        Button(
+            onClick = {
+                scope.launch {
+                    appResetRepository.clearActivityLogs()
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = stringResource(R.string.settings_clear_logs))
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(
+            onClick = {
+                scope.launch {
+                    appResetRepository.resetAll()
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = stringResource(R.string.settings_reset_all))
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
         TextButton(onClick = onBackClick) {
             Text(text = stringResource(R.string.btn_back))
         }
@@ -160,4 +188,3 @@ private fun policyLabel(policy: String): String {
         else -> "Ruxsat"
     }
 }
-
