@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import kotlinx.coroutines.launch
 import uz.qalqon.app.data.local.ProtectedAppDao
 import uz.qalqon.app.data.protection.ProtectionDebugEngine
+import uz.qalqon.app.data.protection.ProtectionOverlayController
 import uz.qalqon.app.data.recognition.RecognitionDebugRepository
 import uz.qalqon.app.data.repository.AuthRepository
 import uz.qalqon.app.data.repository.ProfileRepository
@@ -28,6 +29,7 @@ fun AppNavHost(
     val scope = rememberCoroutineScope()
     val recognitionDebugRepository = remember { RecognitionDebugRepository() }
     val protectionDebugEngine = remember { ProtectionDebugEngine() }
+    val protectionOverlayController = remember { ProtectionOverlayController() }
 
     var pendingFullName by remember { mutableStateOf("") }
     var pendingPhone by remember { mutableStateOf("") }
@@ -197,6 +199,7 @@ fun AppNavHost(
                 recognitionDebugRepository = recognitionDebugRepository,
                 settingsRepository = settingsRepository,
                 protectionDebugEngine = protectionDebugEngine,
+                protectionOverlayController = protectionOverlayController,
                 onBackClick = { navController.popBackStack() }
             )
         }
