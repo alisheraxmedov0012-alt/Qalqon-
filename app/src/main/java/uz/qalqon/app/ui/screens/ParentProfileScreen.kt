@@ -30,6 +30,8 @@ fun ParentProfileScreen(
     var savedMessage by remember { mutableStateOf("") }
     var isFaceEnrolled by remember { mutableStateOf(false) }
 
+    val savedSuccessText = stringResource(R.string.saved_text)
+
     LaunchedEffect(loggedInUserId) {
         val userId = loggedInUserId ?: return@LaunchedEffect
         val profile = profileRepository.getParentProfile(userId)
@@ -74,7 +76,7 @@ fun ParentProfileScreen(
                 val userId = loggedInUserId ?: return@Button
                 scope.launch {
                     profileRepository.saveParentProfile(userId, displayName)
-                    savedMessage = stringResource(R.string.saved_text)
+                    savedMessage = savedSuccessText
                 }
             },
             enabled = displayName.isNotBlank(),
