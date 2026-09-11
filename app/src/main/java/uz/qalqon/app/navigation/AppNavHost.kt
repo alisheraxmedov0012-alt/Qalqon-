@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import uz.qalqon.app.data.local.ProtectedAppDao
@@ -239,3 +239,4 @@ fun AppNavHost(
         }
     }
 }
+
