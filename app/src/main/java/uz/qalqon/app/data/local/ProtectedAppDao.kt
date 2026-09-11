@@ -19,4 +19,7 @@ interface ProtectedAppDao {
 
     @Query("SELECT * FROM protected_apps WHERE packageName = :packageName LIMIT 1")
     suspend fun getByPackageName(packageName: String): ProtectedApp?
+
+    @Query("DELETE FROM protected_apps")
+    suspend fun clearAll()
 }
