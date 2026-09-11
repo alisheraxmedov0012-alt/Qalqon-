@@ -42,6 +42,7 @@
     <string name="home_menu_protected_apps">Himoyalangan ilovalar</string>
     <string name="home_menu_recognition_debug">Tanib olishni tekshirish</string>
     <string name="home_menu_protection_debug">Himoyani tekshirish</string>
+    <string name="home_menu_foreground_debug">Joriy ilovani tekshirish</string>
     <string name="home_menu_activity_log">Faoliyat jurnali</string>
     <string name="home_menu_privacy">Maxfiylik</string>
     <string name="home_menu_help">Yordam</string>
@@ -136,6 +137,15 @@
     <string name="help_line_1">1. Avval ro\'yxatdan o\'ting yoki kiring.</string>
     <string name="help_line_2">2. Ota-ona profilini va bolalar profillarini yarating.</string>
     <string name="help_line_3">3. Sozlamalar, yuzni ro\'yxatdan o\'tkazish va himoya holatini bosqichma-bosqich sozlang.</string>
+
+    <string name="foreground_debug_title">Joriy ilovani tekshirish</string>
+    <string name="foreground_access_granted">Foydalanish ruxsati berilgan</string>
+    <string name="foreground_access_missing">Foydalanish ruxsati hali berilmagan</string>
+    <string name="foreground_current_empty">Hozircha ilova aniqlanmadi</string>
+    <string name="foreground_current_label">Joriy ilova</string>
+    <string name="foreground_debug_help">Bu bo\'lim keyinchalik himoyalangan ilovalarni aniqlash uchun ishlatiladi. Avval tizim sozlamasidan foydalanish ruxsatini yoqing.</string>
+    <string name="foreground_open_settings">Ruxsat sozlamasini ochish</string>
+    <string name="foreground_refresh">Qayta tekshirish</string>
 
     <string name="loading_text">Yuklanmoqda</string>
 </resources>
