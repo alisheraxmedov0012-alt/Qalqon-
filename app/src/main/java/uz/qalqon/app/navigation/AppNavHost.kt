@@ -1,13 +1,16 @@
 package uz.qalqon.app.navigation
 
+import android.content.Context
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import kotlinx.coroutines.launch
 import uz.qalqon.app.data.local.ProtectedAppDao
+import uz.qalqon.app.data.monitoring.ForegroundAppMonitor
 import uz.qalqon.app.data.protection.ProtectionDebugEngine
 import uz.qalqon.app.data.protection.ProtectionOverlayController
 import uz.qalqon.app.data.recognition.RecognitionDebugRepository
@@ -35,11 +38,17 @@ fun AppNavHost(
     val protectionDebugEngine = remember { ProtectionDebugEngine() }
     val protectionOverlayController = remember { ProtectionOverlayController() }
 
+    val context = LocalContext.current
+    val foregroundAppMonitor = remember(context) {
+        ForegroundAppMonitor(context.applicationContext)
+    }
+
     var pendingFullName by remember { mutableStateOf("") }
     var pendingPhone by remember { mutableStateOf("") }
 
     val loggedInUserId by sessionManager.loggedInUserId.collectAsState(initial = null)
-    val startDestination = if (loggedInUserId != null) AppScreen.Home.route else AppScreen.Welcome.route
+    val startDestination =
+        if (loggedInUserId != null) AppScreen.Home.route else AppScreen.Welcome.route
 
     NavHost(
         navController = navController,
@@ -117,7 +126,8 @@ fun AppNavHost(
                 onProtectionDebugClick = { navController.navigate(AppScreen.ProtectionDebug.route) },
                 onActivityLogClick = { navController.navigate(AppScreen.ActivityLog.route) },
                 onPrivacyClick = { navController.navigate(AppScreen.Privacy.route) },
-                onHelpClick = { navController.navigate(AppScreen.Help.route) }
+                onHelpClick = { navController.navigate(AppScreen.Help.route) },
+                onForegroundDebugClick = { navController.navigate(AppScreen.ForegroundAppDebug.route) }
             )
         }
 
@@ -219,6 +229,13 @@ fun AppNavHost(
 
         composable(AppScreen.Help.route) {
             HelpScreen(onBackClick = { navController.popBackStack() })
+        }
+
+        composable(AppScreen.ForegroundAppDebug.route) {
+            ForegroundAppDebugScreen(
+                foregroundAppMonitor = foregroundAppMonitor,
+                onBackClick = { navController.popBackStack() }
+            )
         }
     }
 }
