@@ -80,14 +80,16 @@
     <string name="policy_hard">Qattiq blok</string>
 
     <string name="protected_apps_title">Himoyalangan ilovalar</string>
-    <string name="protected_apps_empty">Hozircha ilovalar yo\'q</string>
+    <string name="protected_apps_subtitle">Quyidagi ilovalarni himoyaga qo\'shishingiz mumkin.</string>
+    <string name="protected_apps_empty">Himoyalash uchun ilovalar topilmadi.</string>
+    <string name="protected_apps_on">Himoyaga qo\'shilgan</string>
+    <string name="protected_apps_off">Himoyaga qo\'shilmagan</string>
 
     <string name="face_enrolled">Yuz ro\'yxatdan o\'tgan</string>
     <string name="face_not_enrolled">Yuz hali ro\'yxatdan o\'tmagan</string>
     <string name="saved_text">Saqlandi</string>
 
     <string name="camera_permission_needed">Kamera ruxsati kerak</string>
-    <string name="camera_permission_note">Yuzni ro\'yxatdan o\'tkazish uchun kameraga ruxsat berish kerak.</string>
     <string name="camera_permission_note_real">Yuzni ro\'yxatdan o\'tkazish uchun kameraga ruxsat berish kerak.</string>
     <string name="enrollment_intro">Yuzni ro\'yxatdan o\'tkazish uchun quyidagi qadamlarni bajaring.</string>
     <string name="enroll_step_1">1-qadam: To\'g\'riga qarang</string>
@@ -134,4 +136,6 @@
     <string name="help_line_1">1. Avval ro\'yxatdan o\'ting yoki kiring.</string>
     <string name="help_line_2">2. Ota-ona profilini va bolalar profillarini yarating.</string>
     <string name="help_line_3">3. Sozlamalar, yuzni ro\'yxatdan o\'tkazish va himoya holatini bosqichma-bosqich sozlang.</string>
+
+    <string name="loading_text">Yuklanmoqda</string>
 </resources>
