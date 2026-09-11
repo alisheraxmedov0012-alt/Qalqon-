@@ -32,7 +32,8 @@ fun HomeScreen(
     onProtectionDebugClick: () -> Unit,
     onActivityLogClick: () -> Unit,
     onPrivacyClick: () -> Unit,
-    onHelpClick: () -> Unit
+    onHelpClick: () -> Unit,
+    onForegroundDebugClick: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val loggedInUserId by sessionManager.loggedInUserId.collectAsState(initial = null)
@@ -132,6 +133,12 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        Button(onClick = onForegroundDebugClick, modifier = Modifier.fillMaxWidth()) {
+            Text(text = stringResource(R.string.home_menu_foreground_debug))
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         Button(onClick = onActivityLogClick, modifier = Modifier.fillMaxWidth()) {
             Text(text = stringResource(R.string.home_menu_activity_log))
         }
@@ -170,4 +177,3 @@ private fun scanModeLabel(mode: String): String {
         else -> "Muvozanatli"
     }
 }
-
