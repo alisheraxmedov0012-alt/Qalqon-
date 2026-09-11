@@ -16,6 +16,7 @@ sealed class AppScreen(val route: String) {
     data object ActivityLog : AppScreen("activity_log")
     data object Privacy : AppScreen("privacy")
     data object Help : AppScreen("help")
+    data object ForegroundAppDebug : AppScreen("foreground_app_debug")
     data object ChildFaceEnrollment : AppScreen("child_face_enrollment/{childId}") {
         fun createRoute(childId: Int): String = "child_face_enrollment/$childId"
     }
