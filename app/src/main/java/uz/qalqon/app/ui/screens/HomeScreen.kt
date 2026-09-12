@@ -1,11 +1,26 @@
 package uz.qalqon.app.ui.screens
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -42,7 +57,11 @@ fun HomeScreen(
     var fullName by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
     var parentStatus by remember { mutableStateOf("") }
-    var childCount by remember { mutableStateOf(0) }
+    var childCount by remember { mutableIntStateOf(0) }
+    var parentFaceReady by remember { mutableStateOf(false) }
+    var anyChildFaceReady by remember { mutableStateOf(false) }
+    var parentProfileReady by remember { mutableStateOf(false) }
+    var protectedAppsSelected by remember { mutableStateOf(false) }
 
     LaunchedEffect(loggedInUserId) {
         val userId = loggedInUserId ?: return@LaunchedEffect
@@ -51,9 +70,19 @@ fun HomeScreen(
         phone = user?.phoneNumber ?: ""
 
         val parent = profileRepository.getParentProfile(userId)
-        parentStatus = if (parent == null) "Yaratilmagan" else parent.displayName
+        parentProfileReady = parent != null
+        parentFaceReady = parent?.isFaceEnrolled == true
+        parentStatus = if (parent == null) {
+            "Yaratilmagan"
+        } else {
+            parent.displayName
+        }
 
-        childCount = profileRepository.getChildProfiles(userId).size
+        val children = profileRepository.getChildProfiles(userId)
+        childCount = children.size
+        anyChildFaceReady = children.any { it.isFaceEnrolled }
+
+        protectedAppsSelected = false
     }
 
     Column(
@@ -94,6 +123,56 @@ fun HomeScreen(
         Text(text = "${stringResource(R.string.home_parent_status)}: $parentStatus")
         Text(text = "${stringResource(R.string.home_children_count)}: $childCount")
         Text(text = "${stringResource(R.string.home_scan_mode)}: ${scanModeLabel(settings.scanMode)}")
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Card(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = stringResource(R.string.setup_status_title),
+                    style = MaterialTheme.typography.titleMedium
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                SetupRow(
+                    title = stringResource(R.string.setup_account_ready),
+                    ready = fullName.isNotBlank() && phone.isNotBlank()
+                )
+
+                SetupRow(
+                    title = stringResource(R.string.setup_parent_profile_ready),
+                    ready = parentProfileReady
+                )
+
+                SetupRow(
+                    title = stringResource(R.string.setup_parent_face_ready),
+                    ready = parentFaceReady
+                )
+
+                SetupRow(
+                    title = stringResource(R.string.setup_child_added),
+                    ready = childCount > 0
+                )
+
+                SetupRow(
+                    title = stringResource(R.string.setup_child_face_ready),
+                    ready = anyChildFaceReady
+                )
+
+                SetupRow(
+                    title = stringResource(R.string.setup_protected_apps_ready),
+                    ready = protectedAppsSelected
+                )
+
+                SetupRow(
+                    title = stringResource(R.string.setup_protection_enabled),
+                    ready = settings.protectionEnabled
+                )
+            }
+        }
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -168,6 +247,21 @@ fun HomeScreen(
             Text(text = stringResource(R.string.btn_logout))
         }
     }
+}
+
+@Composable
+private fun SetupRow(
+    title: String,
+    ready: Boolean
+) {
+    Text(
+        text = if (ready) {
+            "Tayyor: $title"
+        } else {
+            "Kutilmoqda: $title"
+        },
+        style = MaterialTheme.typography.bodyMedium
+    )
 }
 
 private fun scanModeLabel(mode: String): String {
