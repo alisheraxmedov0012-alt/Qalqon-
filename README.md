@@ -1,32 +1,44 @@
-# Qalqon-
+# Qalqon
 
-Qalqon — ota-onalar uchun mo‘ljallangan, bolalar telefondan foydalanganda nazorat qilishga yordam beruvchi Android ilova.
+Qalqon - ota-onalar uchun mo'ljallangan Android MVP ilova.
 
-## Hozirgi holat
-Bu birinchi minimal bosqich:
-- Kotlin + Jetpack Compose asos
-- O‘zbekcha matnlar
-- Welcome ekran
-- Home ekran
-- GitHub Actions orqali debug APK build
+## Maqsad
+Ilova bolalar telefondan foydalanganda himoyalangan ilovalarni cheklashga yordam beradi.
 
-## Keyingi reja
-Keyingi bosqichlarda qo‘shiladi:
-- Ro‘yxatdan o‘tish
+## Hozirgi imkoniyatlar
+- Ro'yxatdan o'tish
 - Kirish
-- PIN kod
+- PIN bilan hisob yaratish
 - Ota-ona profili
-- Bola profillari
-- Yuzni ro‘yxatdan o‘tkazish
-- Himoyalangan ilovalar
-- Face recognition
-- Bloklash funksiyasi
+- Bolalar profillari
+- Yuzni ro'yxatdan o'tkazish uchun UI
+- Kamera preview asoslari
+- Himoyalangan ilovalarni tanlash
+- Tanib olish debug sahifasi
+- Himoya holati debug sahifasi
+- Faoliyat jurnali
+- Maxfiylik sahifasi
+- Yordam sahifasi
+- Joriy ilovani tekshirish sahifasi
+- Sozlash holatini ko'rsatish
 
-## Build
-GitHub Actions debug APK build qiladi.
+## Hozircha cheklovlar
+- Haqiqiy face recognition to'liq yakunlanmagan
+- Global system overlay hali yo'q
+- Background protection hali to'liq yo'q
+- Foreground monitoring MVP bosqichida
+- Reset funksiyasi hali soddalashtirilgan
 
-## Til
-Foydalanuvchi ko‘radigan barcha matnlar o‘zbek tilida bo‘ladi.
+## Muhim tamoyillar
+- O'zbekcha interfeys
+- Offline-first yondashuv
+- Mahalliy saqlash
+- Bosqichma-bosqich rivojlantirish
 
-## Muhim
-Bu MVP bosqichma-bosqich quriladi.
+## Keyingi rivojlantirish yo'nalishlari
+- Real face recognition
+- Real blocking overlay
+- Accessibility asosida kuchliroq protection
+- Battery optimization
+- Edge-case handling
+- 
