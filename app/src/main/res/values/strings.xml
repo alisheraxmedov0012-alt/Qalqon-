@@ -52,6 +52,15 @@
     <string name="home_children_count">Bolalar soni</string>
     <string name="home_scan_mode">Skanerlash rejimi</string>
 
+    <string name="setup_status_title">Sozlash holati</string>
+    <string name="setup_account_ready">Hisob yaratildi</string>
+    <string name="setup_parent_profile_ready">Ota-ona profili yaratildi</string>
+    <string name="setup_parent_face_ready">Ota-ona yuzi kiritildi</string>
+    <string name="setup_child_added">Kamida bitta bola qo\'shildi</string>
+    <string name="setup_child_face_ready">Kamida bitta bola yuzi kiritildi</string>
+    <string name="setup_protected_apps_ready">Himoyalangan ilovalar tanlandi</string>
+    <string name="setup_protection_enabled">Himoya yoqildi</string>
+
     <string name="parent_title">Ota-ona profili</string>
     <string name="parent_display_name_hint">Ko\'rsatiladigan ism</string>
     <string name="parent_face_title">Ota-ona yuzi</string>
